@@ -1,0 +1,37 @@
+{% load static %}
+{% load tags %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'app/style.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="topnav">
+    {% if user.is_authenticated %}
+        <a href="/">Hello, {{user.username}}</a>
+    {% endif %}
+    <a class="active" href="/">Main</a>
+    {% if user.is_authenticated %}
+        <a href="/logout">Logout</a>
+    {% else %}
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+    {% endif %}
+</div>
+
+<p>.</p>
+
+{% for message in messages %}
+    <div class="message">
+        <span class="owner"><strong>{{message.Owner}}</strong></span><span class="time">{{message.Date}}</span>
+        <span><p>{{message.Text}}</p></span>
+    </div>
+{% endfor %}  
+
+{% if user.is_authenticated %}
+    {% block content %}
+        <form method="POST" class="messageform">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit">Send</button>
+        </form>
+    {% endblock %}
+{% endif %}

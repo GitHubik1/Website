@@ -1,0 +1,28 @@
+{% load static %}
+
+<style>
+    h4 {
+        font-family: Verdana, sans-serif;
+    }
+    form {
+        font-family: Verdana, sans-serif;
+    }
+</style>
+
+<link rel="stylesheet" type="text/css" href="{% static 'app/style.css' %}">
+
+<div class="topnav">
+    <a href="/">Main</a>
+    <a href="/login">Login</a>
+    <a class="active" href="/register">Register</a>
+</div>
+
+<h4><p>.</p><p>Create an Account</p></h4>
+
+{% block content %}
+    <form method="POST" class="form-group">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Register</button>
+    </form>
+{% endblock %}
